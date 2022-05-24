@@ -261,7 +261,22 @@ class Ui_inputInfo(object):
             self.box1.addItem(i)
             self.box2.addItem(i)
             self.box3.addItem(i)
+            
+        if self.box1.currentText() == "Chưa tiêm":
+            self.box3.setEnabled(False)
+            self.box2.setEnabled(False)
+        self.box1.currentIndexChanged.connect(self.get1)
 
+        if self.box2.currentText() == "Chưa tiêm":
+            self.box3.setEnabled(False)
+
+        self.box2.currentIndexChanged.connect(self.get2)
+
+    def get1(self):
+        self.box2.setEnabled(True)
+
+    def get2(self):
+        self.box3.setEnabled(True)
 
         # '''ConfirmButton'''
         # if self.input1. == "":
