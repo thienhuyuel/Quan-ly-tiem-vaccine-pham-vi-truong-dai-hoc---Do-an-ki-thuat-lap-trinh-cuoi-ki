@@ -4,12 +4,13 @@ import sys
 from PyQt5.QtChart import QChart, QChartView, QPieSeries, QPieSlice
 from PyQt5.QtGui import QPainter
 from PyQt5.QtCore import Qt
-
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt5.QtCore import pyqtSlot
 #from matplotlib import pyplot as plt
 from pymongo import *
 #DB connection
 mongo_client= MongoClient("mongodb://localhost:27017/")
-db = mongo_client["QuanLyTiemVaccine"]
+db = mongo_client["Va"]
 col = db["ThongTinSinhVien"]
 cur=col.find({})
 list=list(cur)
@@ -68,6 +69,7 @@ class Window(QMainWindow):
         chartview.setRenderHint(QPainter.Antialiasing)
 
         self.setCentralWidget(chartview)
+
 
 if __name__ == '__main__':
     App = QApplication(sys.argv)

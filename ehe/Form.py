@@ -256,7 +256,7 @@ class Ui_inputInfo(object):
         self.radioButton1.setChecked(True)
 
         '''ComboBox'''
-        vacxinList = ["AstraZeneca", "Vero Cell", "Abdala (Cuba)", "Pfizer", "Moderna","Chưa tiêm"]
+        vacxinList = ["Chưa tiêm", "AstraZeneca", "Vero Cell", "Abdala (Cuba)", "Pfizer", "Moderna"]
         for i in vacxinList:
             self.box1.addItem(i)
             self.box2.addItem(i)
@@ -270,6 +270,27 @@ class Ui_inputInfo(object):
         self.confirmButton.clicked.connect(self.confirmPopup)
         # self.input1.textEdited.connect()
         # self.cofirmButton.clicked.connect(self.saveData)
+
+        if self.box1.currentText() == "Chưa tiêm":
+            self.box3.setEnabled(False)
+            self.box2.setEnabled(False)
+        self.box1.currentIndexChanged.connect(self.get1)
+
+        if self.box2.currentText() == "Chưa tiêm":
+            self.box3.setEnabled(False)
+
+        self.box2.currentIndexChanged.connect(self.get2)
+
+    def get1(self):
+        self.box2.setEnabled(True)
+
+    def get2(self):
+        self.box3.setEnabled(True)
+    # def on_combobox_changed(self, value):
+    #     print("combobox changed", value)
+    #     self.box1.
+
+
 
     def gender(self):
         if self.radioButton1.isChecked():
@@ -314,7 +335,7 @@ Mũi 3: {}
         x = msgWindow.exec()
 
     def confirmPopup(self):
-        if self.input1.text()[0].isdigit() or self.input1.text().startswith(" "):
+        if self.input1.text()[0].isdigit() or self.input1.text().startswith(""):
             self.errorWindow()
         elif self.input1.text()[0].isalpha():
             self.confirmWindow()
@@ -324,6 +345,7 @@ Mũi 3: {}
     def popupButton(self,i):
         if i.text() == "Save":
             self.saveData()
+
     def retranslateUi(self, inputInfo):
         _translate = QtCore.QCoreApplication.translate
         inputInfo.setWindowTitle(_translate("inputInfo", "MainWindow"))
@@ -331,7 +353,7 @@ Mũi 3: {}
         self.Left_lable.setText(_translate("inputInfo", "Thông tin cá nhân"))
         self.lb1.setText(_translate("inputInfo", "Họ và tên(*)"))
         self.lb2.setText(_translate("inputInfo", "Số CMND/CCCD/HC(*)"))
-        self.lb3.setText(_translate("inputInfo", "Mũi 1(*)"))
+        self.lb3.setText(_translate("inputInfo", "Mũi 1"))
         self.lb4.setText(_translate("inputInfo", "Ngày tháng năm sinh(*)"))
         self.lb5.setText(_translate("inputInfo", "Số điện thoại"))
         self.lb6.setText(_translate("inputInfo", "Mũi 2"))
@@ -346,17 +368,17 @@ Mũi 3: {}
         dataImport = {"name":self.input1.text(), "date of birth": self.dateInput.text(), "gender": self.gender(), "ID":self.input2.text(), "phone":self.input3.text(), "MSSV": self.input4.text(), "mui1":self.box1.currentText(), "mui2": self.box2.currentText(), "mui3": self.box3.currentText()}
         doc = self.column.insert_one(dataImport)
 
-        
 
-class ControlMainWindow(QMainWindow):
-    def __init__(self, parent=None):
-        super(ControlMainWindow, self).__init__(parent)
-        self.ui = Ui_inputInfo()
-        self.ui.setupUi(self)
+# class ControlMainWindow(QMainWindow):
+#     def __init__(self, parent=None):
+#         super(ControlMainWindow, self).__init__(parent)
+#         self.ui = Ui_inputInfo()
+#         self.ui.setupUi(self)
 
-"""
-app = QApplication(sys.argv)
-mySW = ControlMainWindow()
-mySW.show()
-sys.exit(app.exec_())
-"""
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_inputInfo()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
